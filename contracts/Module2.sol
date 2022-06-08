@@ -109,10 +109,10 @@ contract Module2 is Initializable, VRFConsumerBaseV2Upgradeable {
         require(userCards.length > index, "not exists");
         Card storage card = userCards[index];
         uint256 oneDay = 86400;
-        uint256 power = card.initialPower +
-            card.powerIncrement *
+        uint256 power = card.powerIncrement *
             ((getCurrentTime() - card.createTime) / oneDay);
         IERC20Token(mainToken).mint(msg.sender, power);
+        IERC20Token(mainToken).transfer(msg.sender, card.initialPower);
         uint256 lastIndex = userCards.length - 1;
         userCards[index] = userCards[lastIndex];
         delete userCards[lastIndex];
